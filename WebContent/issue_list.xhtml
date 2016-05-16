@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<body>
+	<h:form>
+		<p:dataTable id="listaIssues" var="issue" value="#{issueMB.lista}">
+
+			<p:column>
+				<f:facet name="header">Id</f:facet>
+					#{issue.id}
+				</p:column>
+
+			<p:column>
+				<f:facet name="header">Camada</f:facet>
+					#{issue.layer}
+				</p:column>
+
+			<p:column>
+				<f:facet name="header">Tipo</f:facet>
+					#{issue.kind}
+				</p:column>
+			<p:column>
+				<f:facet name="header">Criticidade</f:facet>
+					#{issue.importance}
+				</p:column>
+
+			<p:column>
+				<f:facet name="header">Ações</f:facet>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+</body>
+</html>
