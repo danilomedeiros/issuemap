@@ -9,25 +9,21 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import com.medeiros.modules.issues.model.Function;
-import com.medeiros.modules.issues.model.Importance;
 import com.medeiros.modules.issues.model.Issue;
-import com.medeiros.modules.issues.model.Kind;
-import com.medeiros.modules.issues.model.Layer;
+import com.medeiros.modules.issues.service.TagMiner;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class IssueMB {
 
-	static int nextId = 0;
 	private Issue issue;
+	DataBase database; 
 
 	public IssueMB() {
-		System.out.println("IssueMB.IssueMB()");
-		init();
+		database = DataBase.getInstance();
 	}
 	
 	public Issue getIssue() {
@@ -37,60 +33,31 @@ public class IssueMB {
 		return issue;
 	}
 
-	private void init() {
-		Map<String, ? extends IssueMB> table = DataBase.getInstance().getTable(this.getClass());
-		for (int i = 100; i < 102; i++) {
-			Issue issue123 = buildIssue(i);
-			DataBase.getInstance().save(issue123.getId()+"", issue123);
-		}
-		
-	}
-	
-	public Importance[] getImportances(){
-		return Importance.values();
-	}
-
-	private Issue buildIssue(int id) {
-		Issue issue = new Issue();
-		issue.setId(id);
-		issue.setLayer(Layer.VIEW);
-		issue.setImportance(Importance.HIGH);;
-		issue.setDescription("sourceId=j_idt6:j_idt11[severity=(ERROR 2), summary=(j_idt6:j_idt11: Erro de validação: o valor não é válido), detail=(j_idt6:j_idt11: Erro de validação: o valor não é válido)]Abr 28, 2016 1:03:40 AM com.sun.faces.renderkit.");
-//		issue.setFunction(new Function(3));
-		return issue;
-	}
-
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 	}
 
-	public Layer[] getLayers(){
-		return Layer.values();
-//		return new String[]{"Visão", "Regras/Modelo", "Persistência", "Requisitos"};
+	public void calcularIssue(Issue issue){
+		Map<String, Integer> tags = TagMiner.getInstance().tagsFrom(issue.getDescription());
+		Map<String, Integer> features = TagMiner.getInstance().featuresFrom(issue.getDescription());
+		issue.setFeatures(features.keySet().toString());
+		issue.setTags(tags.keySet().toString());
 	}
-
-	public Kind[] getKinds(){
-		return Kind.values();
-	}
-	public Importance[] getHastes(){
-		return Importance.values();
-	}
-
-	public String salvar(){
-		System.out.println("IssueMB.salvar() "+DataBase.getInstance().getTable(Issue.class).size());
-		if(this.issue.getId() ==0){
-			nextId = nextId + 1;
-			this.issue.setId(nextId);
-		}
-		DataBase.getInstance().save(String.valueOf(this.issue.getId()),this.issue);
-		System.out.println("IssueMB.salvar()");
-		
+	public void atualizar(Issue issue){
+		calcularIssue(issue);
+		DataBase.getInstance().save(String.valueOf(issue.getId()),issue);
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Issue Salva.", null);
 		context.addMessage(null, message);
+	}
 	
-		
-		return null;
+	public void salvar(){
+		calcularIssue(issue);
+		DataBase.getInstance().save(issue);
+		FacesContext context = FacesContext.getCurrentInstance();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Issue Salva.", null);
+		context.addMessage(null, message);
+		this.issue = null;
 	}
 
 	public String excluir(Issue issue){

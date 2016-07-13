@@ -4,13 +4,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://custom.com"	>
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<ui:include src="issue_board.xhtml"/>
-		<ui:include src="issue_form.xhtml"/>
-		<ui:include src="issue_list.xhtml"/>
+		<c:heatmap url="http://localhost:8080/IssuesMap/dados.json"/>
+			<p:dataScroller value="#{issueMB.lista}" var="issue" chunkSize="10" mode="document">
+				<h:form binding="#{issue}">
+					<p:inplace editor="true" cancelLabel="Cancelar">
+						<p:ajax event="save" listener="#{issueMB.atualizar(issue)}"/>
+						<p:editor value="#{issue.description}" />
+					</p:inplace>
+				</h:form>
+				<p:spacer width="100" height="5"/>
+				<f:facet name="loader">
+					<p:commandButton type="button" value="..." />
+				</f:facet>	
+			</p:dataScroller>
 	</ui:define>
 </ui:composition>
-</html>	
+</html>

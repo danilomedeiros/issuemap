@@ -9,42 +9,21 @@
 
 <body>
 	<h:form>
-		<p:panelGrid columns="2">
-			<h:outputText value="Funcionalidade">
-			</h:outputText>
-			<h:inputText value="#{issueMB.issue.function}" size="40"></h:inputText>
+		<p:panelGrid columns="1">
+			<p:growl id="mensagens" />
+			<h:outputText value="Features" />
+			<h:inputText value="#{issueMB.issue.features}" size="70" />
 
-			<h:outputText value="Camada">
-			</h:outputText>
-			<p:selectOneMenu title="Selecione a camada"
-				value="#{issueMB.issue.layer}">
-				<f:selectItems value="#{issueMB.layers}" />
+			<h:outputText value="Tags" />
+			<h:inputText value="#{issueMB.issue.tags}" size="70" />
 
-			</p:selectOneMenu>
+			<h:outputText value="Description" />
+			<h:inputTextarea value="#{issueMB.issue.description}" rows="3" cols="70" />
 
-			<h:outputText value="Tipo">
-			</h:outputText>
-
-			<p:selectOneMenu title="Selecione a tipo" value="#{issueMB.issue.kind}">
-				<f:selectItems value="#{issueMB.kinds}" />
-			</p:selectOneMenu>
-
-			<h:outputText value="Criticidade">
-			</h:outputText>
-			<h:selectOneRadio value="#{issueMB.issue.importance}">
-				<f:selectItems value="#{issueMB.importances}" />
-<!-- 				<f:selectItem itemValue="alta" itemLabel="Alta" /> -->
-<!-- 				<f:selectItem itemValue="media" itemLabel="Média" /> -->
-<!-- 				<f:selectItem itemValue="baixa" itemLabel="Baixa" /> -->
-			</h:selectOneRadio>
-
-			<h:outputText value="Descricao">
-			</h:outputText>
-			<h:inputTextarea value="#{issueMB.issue.description}">
-			</h:inputTextarea>
-
-		<p:commandButton value="Salvar" action="#{issueMB.salvar}"/>
+			<p:commandButton value="Salvar" actionListener="#{issueMB.salvar}"
+				update="mensagens" />
 		</p:panelGrid>
 	</h:form>
 </body>
 </html>
+

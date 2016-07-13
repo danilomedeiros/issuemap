@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:j="http://www.jofre.de/visualfaces"
+	xmlns:g="http://foo.com"
+	>
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<ui:include src="issue_board.xhtml" />
+		<g:heatmap/>
+		<h:form>
+			<p:panelGrid columns="1">
+				<j:testcomp msg="Fuciona"/>
+				<!-- 				<p:growl id="mensagens" /> -->
+				<h:outputText value="Features" />
+				<h:inputText value="#{issueMB.issue.features}" size="70" />
+				<h:outputText value="Tags" />
+				<h:inputText value="#{issueMB.issue.tags}" size="70" />
+				<h:outputText value="Description" />
+				<h:inputTextarea value="#{issueMB.issue.description}" rows="3"
+					cols="70" />
+				<p:commandButton value="Salvar" actionListener="#{issueMB.salvar}"
+					update="@all" />
+			</p:panelGrid>
+		</h:form>
+		<h:form>
+			<p:dataTable id="listaIssues" var="issue" value="#{issueMB.lista}"
+				rows="10" liveResize="true" paginator="true" editable="true">
+				<p:column colspan="1">
+					<f:facet name="header">Id</f:facet>
+					#{issue.id}
+				</p:column>
+				<p:column headerText="Description">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{issue.description}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:inputTextarea value="#{issue.description}"/>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column colspan="1">
+					<f:facet name="header">Features</f:facet>
+					#{issue.features}
+				</p:column>
+				<p:column colspan="1">
+					<f:facet name="header">Tags</f:facet>
+					#{issue.tags}
+				</p:column>
+
+				<p:column>
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

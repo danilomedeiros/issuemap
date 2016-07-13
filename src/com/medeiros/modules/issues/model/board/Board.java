@@ -5,6 +5,6 @@ import java.util.Map;
 
 public class Board {
 
-	List<Map<Ordenate, Integer>> linhas;
+	List<Map<String, Integer>> linhas;
 	
 }

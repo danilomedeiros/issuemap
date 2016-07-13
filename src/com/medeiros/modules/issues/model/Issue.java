@@ -2,16 +2,13 @@ package com.medeiros.modules.issues.model;
 
 import java.io.Serializable;
 
-
 public class Issue implements Serializable{
 	
 	private int id;
 	private String description;
-	
-	private Function function;
-	private Layer layer;
-	private Importance importance;
-	private Kind kind;
+	private String features;
+	private String tags;
+	private IssueStatus status;
 	
 	public int getId() {
 		return id;
@@ -25,38 +22,29 @@ public class Issue implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Function getFunction() {
-		return function;
+	public String getTags() {
+		return tags;
 	}
-	public void setFunction(Function function) {
-		this.function = function;
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
-	public Layer getLayer() {
-		return layer;
+	public String getFeatures() {
+		return features;
 	}
-	public void setLayer(Layer layer) {
-		this.layer = layer;
+	public void setFeatures(String features) {
+		this.features = features;
 	}
-
-	public Importance getImportance() {
-		return importance;
+	public String[] tagArray(){
+		if(this.tags == null){
+			this.tags = "";
+		}
+		return this.tags.split(",");
 	}
-	public void setImportance(Importance importance) {
-		this.importance = importance;
-	}
-	public Kind getKind() {
-		return kind;
-	}
-	public void setKind(Kind kind) {
-		this.kind = kind;
-	}
-	@Override
-	public String toString() {
-		return "Issue [id=" + id + ", description=" + description
-				+ ", function=" + function + ", layer=" + layer + ", importance="
-				+ importance + ", kind=" + kind + "]";
-	}
-
 	
-	
+	public String[] featureArray(){
+		if(this.features == null){
+			this.features = "";
+		}
+		return this.features.split(",");
+	}
 }

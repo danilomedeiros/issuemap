@@ -11,29 +11,25 @@
 	<h:form>
 		<p:dataTable id="listaIssues" var="issue" value="#{issueMB.lista}">
 
-			<p:column>
+			<p:column colspan="1"> 
 				<f:facet name="header">Id</f:facet>
 					#{issue.id}
-				</p:column>
+			</p:column >
 
-			<p:column>
-				<f:facet name="header">Camada</f:facet>
-					#{issue.layer}
-				</p:column>
-
-			<p:column>
-				<f:facet name="header">Tipo</f:facet>
-					#{issue.kind}
-				</p:column>
-			<p:column>
-				<f:facet name="header">Criticidade</f:facet>
-					#{issue.importance}
-				</p:column>
-
-			<p:column>
-				<f:facet name="header">Ações</f:facet>
+			<p:column colspan="2">
+				<f:facet name="header">Issue</f:facet>
+					#{issue.description}
 			</p:column>
 
+			<p:column colspan="1">
+				<f:facet name="header">Features</f:facet>
+					#{issue.features}
+			</p:column>
+
+			<p:column colspan="1">
+				<f:facet name="header">Tags</f:facet>
+					#{issue.tags}
+			</p:column>
 		</p:dataTable>
 	</h:form>
 </body>

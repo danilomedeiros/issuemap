@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "- //W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html">
+	<body>
+		<ui:component>
+			<h:outputScript name="d3.v3.js" target="head" library="heatmap/js"/>
+			<h:outputScript name="heatmap.js" target="head" library="heatmap/js"/>
+			<h:outputStylesheet name="heatmap.css" target="body" library="heatmap/css"/>
+			<input type="hidden" id="url" value="#{url}"/>
+			<div id="chart"></div>
+			<script type="text/javascript">
+				var source = $('#url').val();
+				heatmapChart(source, "#chart");
+			</script>
+		</ui:component>
+	</body>
+</html>
